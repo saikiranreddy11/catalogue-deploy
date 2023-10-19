@@ -1,5 +1,5 @@
 #!/bin/bash
-package_version = $1 # to avaoid the ambiguity , variable name is changed to package version
+package_version = "$1" # to avaoid the ambiguity , variable name is changed to package version
 
 echo "version is from shell script  $package_version"
 yum install python3.11-devel python3.11-pip -y
