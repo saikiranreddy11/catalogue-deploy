@@ -1,7 +1,7 @@
 #!/bin/bash
-#package_version = $version # to avaoid the ambiguity , variable name is changed to package version
+package_version = $version # to avaoid the ambiguity , variable name is changed to package version
 
-echo "version is from shell script  $version"
+echo "version is from shell script  $package_version"
 yum install python3.11-devel python3.11-pip -y
 
 pip3.11 install ansible botocore boto3

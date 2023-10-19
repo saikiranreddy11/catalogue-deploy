@@ -17,6 +17,10 @@ module "catalogue-dev" {
 }
 
 resource "null_resource" "execute_script" {
+
+    triggers ={
+        intance_id = module.catalogue-dev.id
+    }
   connection {
     type     = "ssh"
     user     = "centos"  # Replace with the appropriate SSH username for your instance
@@ -32,9 +36,9 @@ resource "null_resource" "execute_script" {
 
   provisioner "remote-exec" {
     inline = [
-        "export version=${var.package_version}", # to avaoid the ambiguity , variable name is changed to version
+        # "export version=${var.package_version}", # to avaoid the ambiguity , variable name is changed to version
       "chmod +x /tmp/catalogue.sh",
-      "sudo sh /tmp/catalogue.sh"
+      "sudo sh /tmp/catalogue.sh ${var.package_version}"
     ]
   }
 }
