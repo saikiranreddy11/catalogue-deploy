@@ -20,6 +20,7 @@ resource "null_resource" "execute_script" {
 
     triggers ={
         intance_id = module.catalogue_dev.id
+        version = var.package_version
     }
   connection {
     type     = "ssh"
