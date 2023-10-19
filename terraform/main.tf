@@ -1,4 +1,4 @@
-module "mongodb" {
+module "catalogue-dev" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   
   name = "catalogue-dev"
@@ -14,4 +14,27 @@ module "mongodb" {
         "terraform" = "true"
     })
     
+}
+
+resource "null_resource" "execute_script" {
+  connection {
+    type     = "ssh"
+    user     = "centos"  # Replace with the appropriate SSH username for your instance
+    password = "DevOps321"
+    host = module.catalogue-dev.private_ip  # Replace with the IP address or DNS of your instance
+  }
+
+    provisioner "file" {
+    source      = "catalogue.sh"
+    destination = "/tmp/catalogue.sh"
+  }
+
+
+  provisioner "remote-exec" {
+    inline = [
+        "export version=${var.package_version}", # to avaoid the ambiguity , variable name is changed to version
+      "chmod +x /tmp/catalogue.sh",
+      "sudo sh /tmp/catalogue.sh"
+    ]
+  }
 }

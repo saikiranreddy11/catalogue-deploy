@@ -34,7 +34,16 @@ pipeline{
             steps{
                 sh '''
                     cd terraform 
-                    terraform plan
+                    terraform plan -var="package_version=${params.version}"
+                '''
+            }
+        }
+
+        stage("apply"){
+            steps{
+                sh '''
+                    cd terraform 
+                    terraform apply -auto-approve -var="package_version=${params.version}"
                 '''
             }
         }
