@@ -32,7 +32,10 @@ pipeline{
         }
         stage("plan"){
             steps{
-                sh 'terraform plan'
+                sh '''
+                    cd terraform 
+                    terraform plan
+                '''
             }
         }
     }
