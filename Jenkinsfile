@@ -20,6 +20,17 @@ pipeline{
                 
             }
         }
+
+        stage("init"){
+            steps{
+                sh 'terraform init -reconfigure'
+            }
+        }
+        stage("plan"){
+            steps{
+                sh 'terraform plan'
+            }
+        }
     }
     // post{
     //     always{
