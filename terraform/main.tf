@@ -1,4 +1,4 @@
-module "catalogue-dev" {
+module "catalogue_dev" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   
   name = "catalogue-dev"
@@ -19,13 +19,13 @@ module "catalogue-dev" {
 resource "null_resource" "execute_script" {
 
     triggers ={
-        intance_id = module.catalogue-dev.id
+        intance_id = module.catalogue_dev.id
     }
   connection {
     type     = "ssh"
     user     = "centos"  # Replace with the appropriate SSH username for your instance
     password = "DevOps321"
-    host = module.catalogue-dev.private_ip  # Replace with the IP address or DNS of your instance
+    host = module.catalogue_dev.private_ip  # Replace with the IP address or DNS of your instance
   }
 
     provisioner "file" {
