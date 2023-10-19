@@ -1,3 +1,7 @@
+data "aws_ssm_parameter" "private_subnets" {
+  name = "/roboshop/dev/private_subnet_cidr" 
+}
+
 data "aws_ami" "devops_ami" {
  
   most_recent      = true
@@ -20,3 +24,11 @@ data "aws_ami" "devops_ami" {
   }
 }
 
+data "aws_route53_zone" "domain_name" {
+  name         = "saikiransudhireddy.com"
+  private_zone = false
+}
+
+data "aws_ssm_parameter" "catalogue_sg_id" {
+  name = "/roboshop/dev/catalogue_sg_id" 
+}

@@ -1,11 +1,12 @@
-module "ec2_instance" {
+module "mongodb" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  //for_each = var.instances
+  
   name = "catalogue-dev"
-    ami = local.ami_id
+    ami = "${local.ami_id}"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["${local.sg_id}"]
-  subnet_id              =  local.private_subnet_ids[0]
+  vpc_security_group_ids = [data.aws_ssm_parameter.catalogue_sg_id.value]
+   subnet_id              = local.private_cidr_block[0]
+   //user_data = file("./user.sh")
     instance_tags = merge({
         "Name" = "catalogue-dev"
     },{
