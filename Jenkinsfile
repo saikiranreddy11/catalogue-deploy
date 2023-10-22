@@ -38,12 +38,25 @@ pipeline{
                 '''
             }
         }
+        stage('Approve') {
+            input {
+                message "Should we continue with deployment?"
+                ok "Yes, we should."
+                submitter "sudhi"
+                parameters {
+                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                }
+            }
+            steps {
+                echo "Hello, ${PERSON}, nice to meet you."
+            }
+        }
 
         stage("apply"){
             steps{
                 sh '''
                     cd terraform 
-                    terraform apply -auto-approve -var="package_version=${params.version}"
+                    terraform apply -var="package_version=${params.version} -auto-approve"
                 '''
             }
         }

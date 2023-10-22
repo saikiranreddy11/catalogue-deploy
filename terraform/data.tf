@@ -32,3 +32,11 @@ data "aws_ami" "devops_ami" {
 data "aws_ssm_parameter" "catalogue_sg_id" {
   name = "/roboshop/dev/catalogue_sg_id" 
 }
+
+data "aws_ssm_parameter" "roboshop_vpcid" {
+  name = "/roboshop/dev/vpc_id" 
+}
+
+data "aws_ssm_parameter" "app_alb_listener_arn" {
+  name = "/roboshop/dev/app_alb_listener_arn" 
+}
