@@ -32,10 +32,10 @@ pipeline{
         }
         stage("plan"){
             steps{
-                sh '''
+                sh """
                     cd terraform 
                     terraform plan -var="package_version=${params.version}"
-                '''
+                """
             }
         }
         stage('Approve') {
@@ -54,10 +54,10 @@ pipeline{
 
         stage("apply"){
             steps{
-                sh '''
+                sh """
                     cd terraform 
-                    terraform apply -var="package_version=${params.version} -auto-approve"
-                '''
+                    terraform apply -var="package_version=${params.version}" -auto-approve
+                """
             }
         }
     }
