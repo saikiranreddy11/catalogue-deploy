@@ -6,6 +6,7 @@ pipeline{
     }
     parameters {
         string(name: 'version', description: 'version of the artifact to be deployed', defaultValue: '1.0.1')
+        string(name:'environment',description:"which env to deploy?",defaultvalue: 'dev')
     }
     
     options {
@@ -23,18 +24,18 @@ pipeline{
 
         stage("init"){
             steps{
-                sh '''
+                sh """
                 cd terraform 
-                terraform init -reconfigure
+                terraform init -reconfigure -backend-config=${params.environment}/providers.tf
 
-                '''
+                """
             }
         }
         stage("plan"){
             steps{
                 sh """
                     cd terraform 
-                    terraform plan -var="package_version=${params.version}"
+                    terraform plan -var="package_version=${params.version} -var="env=${params.environment}" -var-file=${params.environment}/variable.tfvars"
                 """
             }
         }
@@ -56,8 +57,8 @@ pipeline{
             steps{
                 sh """
                     cd terraform 
-                    terraform apply -var="package_version=${params.version}" -auto-approve
-                """
+                    terraform apply -var="package_version=${params.version}" -var="env=${params.environment}" -var-file=${params.environment}/variable.tfvars -auto-approve
+                """ 
             }
         }
     }

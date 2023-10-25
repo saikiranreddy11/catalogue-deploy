@@ -6,6 +6,7 @@ module "catalogue_dev" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [data.aws_ssm_parameter.catalogue_sg_id.value]
    subnet_id              = local.private_cidr_block[0]
+   iam_instance_profile = "catalogue_profile" //this is the unique profile name created from the iam role infra part, check there
    //user_data = file("./user.sh")
     instance_tags = merge({
         "Name" = "${var.projectname}-${var.env}-catalogue"
@@ -39,7 +40,7 @@ resource "null_resource" "execute_script" {
     inline = [
         # "export version=${var.package_version}", # to avaoid the ambiguity , variable name is changed to version
       "chmod +x /tmp/catalogue.sh",
-      "sudo sh /tmp/catalogue.sh ${var.package_version}"
+      "sudo sh /tmp/catalogue.sh ${var.package_version} ${var.env}"
     ]
   }
 }
