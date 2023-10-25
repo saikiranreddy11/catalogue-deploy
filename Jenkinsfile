@@ -35,7 +35,7 @@ pipeline{
             steps{
                 sh """
                     cd terraform 
-                    terraform plan -var-file=${params.environment}/variable.tfvars -var="package_version=${params.version}" -var="env=${params.environment}" 
+                    terraform plan -var-file=${params.environment}/variables.tfvars -var="package_version=${params.version}" -var="env=${params.environment}" 
                 """
             }
         }
@@ -57,7 +57,7 @@ pipeline{
             steps{
                 sh """
                     cd terraform 
-                    terraform apply -var-file=${params.environment}/variable.tfvars -var="package_version=${params.version}" -auto-approve
+                    terraform apply -var-file=${params.environment}/variables.tfvars -var="package_version=${params.version}" -auto-approve
                 """ 
             }
         }
