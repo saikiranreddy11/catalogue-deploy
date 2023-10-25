@@ -6,7 +6,7 @@ pipeline{
     }
     parameters {
         string(name: 'version', description: 'version of the artifact to be deployed', defaultValue: '1.0.1')
-        string(name:'environment',description:"which env to deploy?",defaultvalue: 'dev')
+        string(name:'environment', description:"which env to deploy?", defaultValue: 'dev')
     }
     
     options {
